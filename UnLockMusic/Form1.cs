@@ -22,7 +22,7 @@ namespace UnLockMusic
     {
         private int m_intFormat = 0;                    //保存格式：0-歌名，1-歌名（副标题），2-歌名（副标题）[歌手]，3-歌名[歌手]
         private string m_strDocument = "Music";         //保存音乐的文件夹
-        private string m_strTempData = "TempData";      //临时文件夹
+        //private string m_strTempData = "TempData";      //临时文件夹
         private string m_strLog = "log.txt";            //日志文件
         private string m_strConfig = "config.txt";      //配置文件
         private bool isSelectAllMusic = false;          //将全选按钮和取消按钮合并
@@ -47,6 +47,10 @@ namespace UnLockMusic
             InitializeComponent();
             init();
             ReadConfig();
+
+#if DEBUG
+            txbSearch.Text = "大喜";
+#endif
         }
 
         #region 控件事件
@@ -184,9 +188,9 @@ namespace UnLockMusic
             lblTip.Text = "正在努力关闭……………………";
             axWindowsMediaPlayer1.Ctlcontrols.pause();
             axWindowsMediaPlayer1.URL = "";
-            string strFileName = m_strDocument + "\\" + m_strTempData;
-            if (Directory.Exists(strFileName))   //如果存在临时文件夹，就删除  
-                Directory.Delete(strFileName, true);
+            //string strFileName = m_strDocument /*+ "\\" + m_strTempData*/;
+            //if (Directory.Exists(strFileName))   //如果存在临时文件夹，就删除  
+            //    Directory.Delete(strFileName, true);
         }
         private void timer1_Tick(object sender, EventArgs e)
         {
@@ -258,7 +262,7 @@ namespace UnLockMusic
         }
         private void GetMusicList()
         {
-            string strName = txbSerch.Text;
+            string strName = txbSearch.Text;
             clsMusicOperation mop = new clsMusicOperation();
             List<clsMusic> lmsc = new List<clsMusic>();
 
@@ -321,7 +325,7 @@ namespace UnLockMusic
             string strFileName = m_strDocument;
             clsMusicOperation mop = new clsMusicOperation();
             clsHttpDownloadFile hdf = new clsHttpDownloadFile();
-            string strTempFile = m_strDocument + "\\" + m_strTempData + "\\" + strDownloadInfo;//临时文件
+            string strTempFile = m_strDocument /*+ "\\" + m_strTempData*/ + "\\" + strDownloadInfo;//临时文件
             string strFormat = ".mp3";
             int i = 0;
             bool bolExistsTempFile = false;//是否存在缓存
@@ -419,13 +423,30 @@ namespace UnLockMusic
             //lblTopTip.Text = "";
             int iRow = (int)oRow;
             string strDownloadURL = "";
-            enmMusicSource emsSource = (enmMusicSource)dataGVscan.Rows[iRow].Cells["dgvSource"].Value;
-            string strDownloadInfo = dataGVscan.Rows[iRow].Cells["dgvDownloadInfo"].Value.ToString();
-            string strDisplayName = dataGVscan.Rows[iRow].Cells["dgvDisplayName"].Value.ToString();
-            string strID = dataGVscan.Rows[iRow].Cells["dgvID"].Value.ToString();
-            string strFileName = m_strDocument + "\\" + m_strTempData;
+            var rowData = dataGVscan.Rows[iRow];
+
+            string getStr(string name)
+            {
+                return rowData.Cells[name].Value.ToString();
+            }
+
+            enmMusicSource emsSource = (enmMusicSource)rowData.Cells["dgvSource"].Value;
+            string strDownloadInfo = getStr("dgvDownloadInfo");
+            
+            string strID = getStr("dgvID");
+
+
+            string strDisplayName = getStr("dgvDisplayName");//歌名
+            string strClass = getStr("dgvClass");//专辑
+            string strSinger = getStr("dgvSinger");//歌手
+            string strSourceName = getStr("dgvSourceName");//来源
+
+
+            string strFileName = m_strDocument /*+ "\\" + m_strTempData*/;
             clsMusicOperation mop = new clsMusicOperation();
             clsHttpDownloadFile hdf = new clsHttpDownloadFile();
+
+            strDisplayName = $"{strDisplayName}-{strSinger}-{strClass}-{strSourceName}";
             try
             {
                 if (!Directory.Exists(strFileName))   //如果不存在就创建 临时文件夹  
@@ -445,7 +466,7 @@ namespace UnLockMusic
                     WriteLog("无法获取歌曲“" + strDisplayName + "”的下载地址，试听失败！");
                     return;
                 }
-                strFileName = strFileName + "\\" + strDownloadInfo + mop.GetFileFormat(); //临时文件夹 + dgvDownloadInfo + 格式
+                strFileName = strFileName + "\\" + strDisplayName + mop.GetFileFormat(); //临时文件夹 + dgvDownloadInfo + 格式
 
                 if (!(File.Exists(strFileName))) //不存在缓存，才下载
                     if (!hdf.Download(strDownloadURL, strFileName))
@@ -562,6 +583,7 @@ namespace UnLockMusic
          */
         private void AddAMusic(int rowNum, clsMusic music)
         {
+            if (!music.CanDownload) return;
             dataGVscan.Rows.Add();
             dataGVscan.Rows[rowNum].Cells[numbering].Value = rowNum + 1;
             dataGVscan.Rows[rowNum].Cells[name].Value = music.Name + (music.Subheading == "" ? "" : music.Subheading);
@@ -570,15 +592,15 @@ namespace UnLockMusic
             dataGVscan.Rows[rowNum].Cells["dgvSource"].Value = music.Source;
             dataGVscan.Rows[rowNum].Cells["dgvName"].Value = music.Name;
             dataGVscan.Rows[rowNum].Cells["dgvSubheading"].Value = music.Subheading;
-            if (music.CanDownload)
+            //if (music.CanDownload)
             {
                 dataGVscan.Rows[rowNum].Cells["dgvCanDownload"].Value = "1";
             }
-            else
-            {
-                dataGVscan.Rows[rowNum].Cells["dgvCanDownload"].Value = "0";
-                dataGVscan.Rows[rowNum].DefaultCellStyle.BackColor = Color.Silver;
-            }
+            //else
+            //{
+            //    dataGVscan.Rows[rowNum].Cells["dgvCanDownload"].Value = "0";
+            //    dataGVscan.Rows[rowNum].DefaultCellStyle.BackColor = Color.Silver;
+            //}
 
             switch (music.Source)
             {
@@ -675,5 +697,10 @@ namespace UnLockMusic
         }
 
         #endregion
+
+        private void txbSerch_TextChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }

@@ -29,14 +29,27 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmList));
             this.btnSerch = new System.Windows.Forms.Button();
-            this.txbSerch = new System.Windows.Forms.TextBox();
+            this.txbSearch = new System.Windows.Forms.TextBox();
             this.dataGVscan = new System.Windows.Forms.DataGridView();
+            this.select = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.dgvID = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dgvDisplayName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dgvSinger = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dgvClass = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dgvSourceName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dgvPlayMusic = new System.Windows.Forms.DataGridViewButtonColumn();
+            this.dgvDownload = new System.Windows.Forms.DataGridViewButtonColumn();
+            this.dgvSource = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dgvDownloadInfo = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dgvCanDownload = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dgvName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dgvSubheading = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.lblTip = new System.Windows.Forms.Label();
             this.lblFormatTip = new System.Windows.Forms.Label();
             this.cmbFormat = new System.Windows.Forms.ComboBox();
@@ -56,33 +69,20 @@
             this.axWindowsMediaPlayer2 = new AxWMPLib.AxWindowsMediaPlayer();
             this.panel1 = new System.Windows.Forms.Panel();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-            this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
-            this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
+            this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.panel2 = new System.Windows.Forms.Panel();
-            this.select = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.dgvID = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dgvDisplayName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dgvSinger = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dgvClass = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dgvSourceName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dgvPlayMusic = new System.Windows.Forms.DataGridViewButtonColumn();
-            this.dgvDownload = new System.Windows.Forms.DataGridViewButtonColumn();
-            this.dgvSource = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dgvDownloadInfo = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dgvCanDownload = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dgvName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dgvSubheading = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
             ((System.ComponentModel.ISupportInitialize)(this.dataGVscan)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.axWindowsMediaPlayer1)).BeginInit();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.axWindowsMediaPlayer2)).BeginInit();
             this.panel1.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
-            this.tableLayoutPanel2.SuspendLayout();
             this.tableLayoutPanel3.SuspendLayout();
-            this.tableLayoutPanel4.SuspendLayout();
+            this.tableLayoutPanel2.SuspendLayout();
             this.panel2.SuspendLayout();
+            this.tableLayoutPanel4.SuspendLayout();
             this.SuspendLayout();
             // 
             // btnSerch
@@ -102,19 +102,20 @@
             this.btnSerch.UseVisualStyleBackColor = false;
             this.btnSerch.Click += new System.EventHandler(this.btnSerch_Click);
             // 
-            // txbSerch
+            // txbSearch
             // 
-            this.txbSerch.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.txbSerch.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.txbSerch.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.txbSerch.Location = new System.Drawing.Point(2, 6);
-            this.txbSerch.Margin = new System.Windows.Forms.Padding(2);
-            this.txbSerch.Name = "txbSerch";
-            this.txbSerch.Size = new System.Drawing.Size(333, 19);
-            this.txbSerch.TabIndex = 0;
-            this.txbSerch.Text = "输入搜索关键字";
-            this.txbSerch.WordWrap = false;
-            this.txbSerch.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txbSerch_KeyDown);
+            this.txbSearch.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.txbSearch.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.txbSearch.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.txbSearch.Location = new System.Drawing.Point(2, 6);
+            this.txbSearch.Margin = new System.Windows.Forms.Padding(2);
+            this.txbSearch.Name = "txbSearch";
+            this.txbSearch.Size = new System.Drawing.Size(333, 19);
+            this.txbSearch.TabIndex = 0;
+            this.txbSearch.Text = "输入搜索关键字";
+            this.txbSearch.WordWrap = false;
+            this.txbSearch.TextChanged += new System.EventHandler(this.txbSerch_TextChanged);
+            this.txbSearch.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txbSerch_KeyDown);
             // 
             // dataGVscan
             // 
@@ -122,14 +123,14 @@
             this.dataGVscan.AllowUserToAddRows = false;
             this.dataGVscan.AllowUserToResizeRows = false;
             this.dataGVscan.BackgroundColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dataGVscan.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle5.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle5.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            dataGridViewCellStyle5.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dataGVscan.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle5;
             this.dataGVscan.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
             this.dataGVscan.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.select,
@@ -145,32 +146,32 @@
             this.dgvCanDownload,
             this.dgvName,
             this.dgvSubheading});
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            dataGridViewCellStyle2.ForeColor = System.Drawing.Color.Black;
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.Color.Transparent;
-            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.Color.Black;
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dataGVscan.DefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle6.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            dataGridViewCellStyle6.ForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.Color.Transparent;
+            dataGridViewCellStyle6.SelectionForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dataGVscan.DefaultCellStyle = dataGridViewCellStyle6;
             this.dataGVscan.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dataGVscan.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
             this.dataGVscan.Location = new System.Drawing.Point(23, 75);
             this.dataGVscan.Name = "dataGVscan";
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle3.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle3.NullValue = null;
-            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dataGVscan.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle7.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle7.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            dataGridViewCellStyle7.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle7.NullValue = null;
+            dataGridViewCellStyle7.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle7.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle7.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dataGVscan.RowHeadersDefaultCellStyle = dataGridViewCellStyle7;
             this.dataGVscan.RowHeadersVisible = false;
             this.dataGVscan.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
-            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.WindowText;
-            this.dataGVscan.RowsDefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle8.ForeColor = System.Drawing.SystemColors.WindowText;
+            this.dataGVscan.RowsDefaultCellStyle = dataGridViewCellStyle8;
             this.dataGVscan.RowTemplate.DefaultCellStyle.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
             this.dataGVscan.RowTemplate.Height = 23;
             this.dataGVscan.RowTemplate.Resizable = System.Windows.Forms.DataGridViewTriState.False;
@@ -179,6 +180,96 @@
             this.dataGVscan.TabIndex = 8;
             this.dataGVscan.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGVscan_CellContentClick);
             this.dataGVscan.ColumnHeaderMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dataGVscan_ColumnHeaderMouseClick);
+            // 
+            // select
+            // 
+            this.select.HeaderText = "全选";
+            this.select.Name = "select";
+            this.select.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.select.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            this.select.Width = 40;
+            // 
+            // dgvID
+            // 
+            this.dgvID.HeaderText = "序号";
+            this.dgvID.Name = "dgvID";
+            this.dgvID.Width = 50;
+            // 
+            // dgvDisplayName
+            // 
+            this.dgvDisplayName.HeaderText = "名称";
+            this.dgvDisplayName.Name = "dgvDisplayName";
+            this.dgvDisplayName.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgvDisplayName.Width = 205;
+            // 
+            // dgvSinger
+            // 
+            this.dgvSinger.HeaderText = "歌手";
+            this.dgvSinger.Name = "dgvSinger";
+            this.dgvSinger.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgvSinger.Width = 120;
+            // 
+            // dgvClass
+            // 
+            this.dgvClass.HeaderText = "专辑";
+            this.dgvClass.Name = "dgvClass";
+            this.dgvClass.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgvClass.Width = 120;
+            // 
+            // dgvSourceName
+            // 
+            this.dgvSourceName.HeaderText = "来源";
+            this.dgvSourceName.Name = "dgvSourceName";
+            this.dgvSourceName.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgvSourceName.Width = 90;
+            // 
+            // dgvPlayMusic
+            // 
+            this.dgvPlayMusic.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.dgvPlayMusic.HeaderText = "试听";
+            this.dgvPlayMusic.Name = "dgvPlayMusic";
+            this.dgvPlayMusic.Text = "播放";
+            this.dgvPlayMusic.UseColumnTextForButtonValue = true;
+            this.dgvPlayMusic.Width = 50;
+            // 
+            // dgvDownload
+            // 
+            this.dgvDownload.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.dgvDownload.HeaderText = "下载选中";
+            this.dgvDownload.Name = "dgvDownload";
+            this.dgvDownload.Text = "下载";
+            this.dgvDownload.UseColumnTextForButtonValue = true;
+            this.dgvDownload.Width = 60;
+            // 
+            // dgvSource
+            // 
+            this.dgvSource.HeaderText = "Source";
+            this.dgvSource.Name = "dgvSource";
+            this.dgvSource.Visible = false;
+            // 
+            // dgvDownloadInfo
+            // 
+            this.dgvDownloadInfo.HeaderText = "DownloadInfo";
+            this.dgvDownloadInfo.Name = "dgvDownloadInfo";
+            this.dgvDownloadInfo.Visible = false;
+            // 
+            // dgvCanDownload
+            // 
+            this.dgvCanDownload.HeaderText = "CanDownload";
+            this.dgvCanDownload.Name = "dgvCanDownload";
+            this.dgvCanDownload.Visible = false;
+            // 
+            // dgvName
+            // 
+            this.dgvName.HeaderText = "Name";
+            this.dgvName.Name = "dgvName";
+            this.dgvName.Visible = false;
+            // 
+            // dgvSubheading
+            // 
+            this.dgvSubheading.HeaderText = "Subheading";
+            this.dgvSubheading.Name = "dgvSubheading";
+            this.dgvSubheading.Visible = false;
             // 
             // lblTip
             // 
@@ -199,7 +290,7 @@
             this.lblFormatTip.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.lblFormatTip.AutoSize = true;
             this.lblFormatTip.Font = new System.Drawing.Font("宋体", 9F);
-            this.lblFormatTip.Location = new System.Drawing.Point(443, 21);
+            this.lblFormatTip.Location = new System.Drawing.Point(442, 21);
             this.lblFormatTip.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblFormatTip.Name = "lblFormatTip";
             this.lblFormatTip.Size = new System.Drawing.Size(65, 12);
@@ -210,7 +301,7 @@
             // 
             this.cmbFormat.Font = new System.Drawing.Font("宋体", 9F);
             this.cmbFormat.FormattingEnabled = true;
-            this.cmbFormat.Location = new System.Drawing.Point(512, 16);
+            this.cmbFormat.Location = new System.Drawing.Point(511, 16);
             this.cmbFormat.Margin = new System.Windows.Forms.Padding(2);
             this.cmbFormat.Name = "cmbFormat";
             this.cmbFormat.Size = new System.Drawing.Size(130, 20);
@@ -384,6 +475,29 @@
             this.tableLayoutPanel1.Size = new System.Drawing.Size(803, 397);
             this.tableLayoutPanel1.TabIndex = 20;
             // 
+            // tableLayoutPanel3
+            // 
+            this.tableLayoutPanel3.ColumnCount = 4;
+            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 85.84906F));
+            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 14.15094F));
+            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 142F));
+            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 105F));
+            this.tableLayoutPanel3.Controls.Add(this.panel1, 0, 2);
+            this.tableLayoutPanel3.Controls.Add(this.lblTip, 0, 0);
+            this.tableLayoutPanel3.Controls.Add(this.btnOpenDirectory, 3, 1);
+            this.tableLayoutPanel3.Controls.Add(this.WaitBar, 0, 1);
+            this.tableLayoutPanel3.Controls.Add(this.lblFormatTip, 1, 1);
+            this.tableLayoutPanel3.Controls.Add(this.cmbFormat, 2, 1);
+            this.tableLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel3.Location = new System.Drawing.Point(23, 293);
+            this.tableLayoutPanel3.Name = "tableLayoutPanel3";
+            this.tableLayoutPanel3.RowCount = 3;
+            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 35F));
+            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 65F));
+            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 50F));
+            this.tableLayoutPanel3.Size = new System.Drawing.Size(757, 91);
+            this.tableLayoutPanel3.TabIndex = 21;
+            // 
             // tableLayoutPanel2
             // 
             this.tableLayoutPanel2.ColumnCount = 3;
@@ -401,44 +515,6 @@
             this.tableLayoutPanel2.Size = new System.Drawing.Size(757, 56);
             this.tableLayoutPanel2.TabIndex = 21;
             // 
-            // tableLayoutPanel3
-            // 
-            this.tableLayoutPanel3.ColumnCount = 4;
-            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 85.84906F));
-            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 14.15094F));
-            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 142F));
-            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 104F));
-            this.tableLayoutPanel3.Controls.Add(this.panel1, 0, 2);
-            this.tableLayoutPanel3.Controls.Add(this.lblTip, 0, 0);
-            this.tableLayoutPanel3.Controls.Add(this.btnOpenDirectory, 3, 1);
-            this.tableLayoutPanel3.Controls.Add(this.WaitBar, 0, 1);
-            this.tableLayoutPanel3.Controls.Add(this.lblFormatTip, 1, 1);
-            this.tableLayoutPanel3.Controls.Add(this.cmbFormat, 2, 1);
-            this.tableLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel3.Location = new System.Drawing.Point(23, 293);
-            this.tableLayoutPanel3.Name = "tableLayoutPanel3";
-            this.tableLayoutPanel3.RowCount = 3;
-            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 35F));
-            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 65F));
-            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 50F));
-            this.tableLayoutPanel3.Size = new System.Drawing.Size(757, 91);
-            this.tableLayoutPanel3.TabIndex = 21;
-            // 
-            // tableLayoutPanel4
-            // 
-            this.tableLayoutPanel4.ColumnCount = 2;
-            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 81.23249F));
-            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 18.76751F));
-            this.tableLayoutPanel4.Controls.Add(this.btnSerch, 1, 0);
-            this.tableLayoutPanel4.Controls.Add(this.txbSerch, 0, 0);
-            this.tableLayoutPanel4.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel4.Location = new System.Drawing.Point(0, 0);
-            this.tableLayoutPanel4.Name = "tableLayoutPanel4";
-            this.tableLayoutPanel4.RowCount = 1;
-            this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel4.Size = new System.Drawing.Size(416, 32);
-            this.tableLayoutPanel4.TabIndex = 11;
-            // 
             // panel2
             // 
             this.panel2.BackColor = System.Drawing.SystemColors.Window;
@@ -450,95 +526,20 @@
             this.panel2.Size = new System.Drawing.Size(418, 34);
             this.panel2.TabIndex = 12;
             // 
-            // select
+            // tableLayoutPanel4
             // 
-            this.select.HeaderText = "全选";
-            this.select.Name = "select";
-            this.select.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.select.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-            this.select.Width = 40;
-            // 
-            // dgvID
-            // 
-            this.dgvID.HeaderText = "序号";
-            this.dgvID.Name = "dgvID";
-            this.dgvID.Width = 50;
-            // 
-            // dgvDisplayName
-            // 
-            this.dgvDisplayName.HeaderText = "名称";
-            this.dgvDisplayName.Name = "dgvDisplayName";
-            this.dgvDisplayName.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgvDisplayName.Width = 205;
-            // 
-            // dgvSinger
-            // 
-            this.dgvSinger.HeaderText = "歌手";
-            this.dgvSinger.Name = "dgvSinger";
-            this.dgvSinger.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgvSinger.Width = 120;
-            // 
-            // dgvClass
-            // 
-            this.dgvClass.HeaderText = "专辑";
-            this.dgvClass.Name = "dgvClass";
-            this.dgvClass.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgvClass.Width = 120;
-            // 
-            // dgvSourceName
-            // 
-            this.dgvSourceName.HeaderText = "来源";
-            this.dgvSourceName.Name = "dgvSourceName";
-            this.dgvSourceName.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgvSourceName.Width = 90;
-            // 
-            // dgvPlayMusic
-            // 
-            this.dgvPlayMusic.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.dgvPlayMusic.HeaderText = "试听";
-            this.dgvPlayMusic.Name = "dgvPlayMusic";
-            this.dgvPlayMusic.Text = "播放";
-            this.dgvPlayMusic.UseColumnTextForButtonValue = true;
-            this.dgvPlayMusic.Width = 50;
-            // 
-            // dgvDownload
-            // 
-            this.dgvDownload.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.dgvDownload.HeaderText = "下载选中";
-            this.dgvDownload.Name = "dgvDownload";
-            this.dgvDownload.Text = "下载";
-            this.dgvDownload.UseColumnTextForButtonValue = true;
-            this.dgvDownload.Width = 60;
-            // 
-            // dgvSource
-            // 
-            this.dgvSource.HeaderText = "Source";
-            this.dgvSource.Name = "dgvSource";
-            this.dgvSource.Visible = false;
-            // 
-            // dgvDownloadInfo
-            // 
-            this.dgvDownloadInfo.HeaderText = "DownloadInfo";
-            this.dgvDownloadInfo.Name = "dgvDownloadInfo";
-            this.dgvDownloadInfo.Visible = false;
-            // 
-            // dgvCanDownload
-            // 
-            this.dgvCanDownload.HeaderText = "CanDownload";
-            this.dgvCanDownload.Name = "dgvCanDownload";
-            this.dgvCanDownload.Visible = false;
-            // 
-            // dgvName
-            // 
-            this.dgvName.HeaderText = "Name";
-            this.dgvName.Name = "dgvName";
-            this.dgvName.Visible = false;
-            // 
-            // dgvSubheading
-            // 
-            this.dgvSubheading.HeaderText = "Subheading";
-            this.dgvSubheading.Name = "dgvSubheading";
-            this.dgvSubheading.Visible = false;
+            this.tableLayoutPanel4.ColumnCount = 2;
+            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 81.23249F));
+            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 18.76751F));
+            this.tableLayoutPanel4.Controls.Add(this.btnSerch, 1, 0);
+            this.tableLayoutPanel4.Controls.Add(this.txbSearch, 0, 0);
+            this.tableLayoutPanel4.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel4.Location = new System.Drawing.Point(0, 0);
+            this.tableLayoutPanel4.Name = "tableLayoutPanel4";
+            this.tableLayoutPanel4.RowCount = 1;
+            this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel4.Size = new System.Drawing.Size(416, 32);
+            this.tableLayoutPanel4.TabIndex = 11;
             // 
             // frmList
             // 
@@ -564,13 +565,13 @@
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             this.tableLayoutPanel1.ResumeLayout(false);
-            this.tableLayoutPanel2.ResumeLayout(false);
-            this.tableLayoutPanel2.PerformLayout();
             this.tableLayoutPanel3.ResumeLayout(false);
             this.tableLayoutPanel3.PerformLayout();
+            this.tableLayoutPanel2.ResumeLayout(false);
+            this.tableLayoutPanel2.PerformLayout();
+            this.panel2.ResumeLayout(false);
             this.tableLayoutPanel4.ResumeLayout(false);
             this.tableLayoutPanel4.PerformLayout();
-            this.panel2.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -579,7 +580,7 @@
         #endregion
 
         private System.Windows.Forms.Button btnSerch;
-        private System.Windows.Forms.TextBox txbSerch;
+        private System.Windows.Forms.TextBox txbSearch;
         public System.Windows.Forms.DataGridView dataGVscan;
         private System.Windows.Forms.Label lblTip;
         private System.Windows.Forms.Label lblFormatTip;
