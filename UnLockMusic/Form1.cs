@@ -49,7 +49,7 @@ namespace UnLockMusic
             ReadConfig();
 
 #if DEBUG
-            txbSearch.Text = "大喜";
+            txbSearch.Text = "crazy_frog";
 #endif
         }
 
@@ -584,14 +584,15 @@ namespace UnLockMusic
         private void AddAMusic(int rowNum, clsMusic music)
         {
             if (!music.CanDownload) return;
-            dataGVscan.Rows.Add();
-            dataGVscan.Rows[rowNum].Cells[numbering].Value = rowNum + 1;
-            dataGVscan.Rows[rowNum].Cells[name].Value = music.Name + (music.Subheading == "" ? "" : music.Subheading);
-            dataGVscan.Rows[rowNum].Cells[singer].Value = music.Singer;
-            dataGVscan.Rows[rowNum].Cells[album].Value = music.Class;
-            dataGVscan.Rows[rowNum].Cells["dgvSource"].Value = music.Source;
-            dataGVscan.Rows[rowNum].Cells["dgvName"].Value = music.Name;
-            dataGVscan.Rows[rowNum].Cells["dgvSubheading"].Value = music.Subheading;
+            rowNum = dataGVscan.Rows.Add();
+            var row = dataGVscan.Rows[rowNum];
+            row.Cells[numbering].Value = rowNum + 1;
+            row.Cells[name].Value = music.Name + (music.Subheading == "" ? "" : music.Subheading);
+            row.Cells[singer].Value = music.Singer;
+            row.Cells[album].Value = music.Class;
+            row.Cells["dgvSource"].Value = music.Source;
+            row.Cells["dgvName"].Value = music.Name;
+            row.Cells["dgvSubheading"].Value = music.Subheading;
             //if (music.CanDownload)
             {
                 dataGVscan.Rows[rowNum].Cells["dgvCanDownload"].Value = "1";

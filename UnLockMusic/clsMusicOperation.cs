@@ -2,6 +2,7 @@
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -31,8 +32,8 @@ namespace UnLockMusic
         private string m_strWyyMusicIV = "0102030405060708";
         private string m_strWyyMusicGetList = "{\"hlpretag\":\"<span class=\\\"s-fc7\\\">\",\"hlposttag\":\"</span>\",\"s\":\"<<SongName>>\",\"type\":\"1\",\"offset\":\"0\",\"total\":\"true\",\"limit\":\"10\",\"csrf_token\":\"\"}";
         private string m_strWyyMusicGetDownloadURL = "{\"ids\":\"[<<ID>>]\",\"level\":\"standard\",\"encodeType\":\"aac\",\"csrf_token\":\"\"}";
-        private string m_strWyyMusicSecond = "010001";
-        private string m_strWyyMusicThrid = "00e0b509f6259df8642dbc35662901477df22677ec152b5ff68ace615bb7b725152b3ab17a876aea8a5aa76d2e417629ec4ee341f56135fccf695280104e0312ecbda92557c93870114af6c9d05c4f7f0c3685b7a46bee255932575cce10b424d813cfe4875d3e82047b97ddef52741d546b8e289dc6935b3ece0462db0a22b8e7";
+        //private string m_strWyyMusicSecond = "010001";
+        //private string m_strWyyMusicThrid = "00e0b509f6259df8642dbc35662901477df22677ec152b5ff68ace615bb7b725152b3ab17a876aea8a5aa76d2e417629ec4ee341f56135fccf695280104e0312ecbda92557c93870114af6c9d05c4f7f0c3685b7a46bee255932575cce10b424d813cfe4875d3e82047b97ddef52741d546b8e289dc6935b3ece0462db0a22b8e7";
         private string m_strWyyMusicFourth = "0CoJUm6Qyw8W8jud"; //第4个参数，随机16位数也用这个
         private string m_strWyyMusicRSA = "bf50d0bcf56833b06d8d1219496a452a1d860fd58a14c0aafba3e770104ca77dc6856cb310ed3309039e6865081be4ddc2df52663373b20b70ac25b4d0c6ca466daef6b50174e93536e2d580c49e70649ad1936584899e85722eb83ceddfb4f56c1172fca5e60592d0e6ee3e8e02be1fe6e53f285b0389162d8e6ddc553857cd"; //对应 m_strWyyMusicFourth 进行RSA加密后
 
@@ -49,14 +50,89 @@ namespace UnLockMusic
         /// <returns></returns>
         public List<clsMusic> GetMusicList(string SongName)
         {
+            var strs = SongName.Split(' ');
+            var songName = strs[0];
+            string singer = null;
+
+            if (SongName.Contains("_"))
+            {
+                SongName = songName = songName.Replace("_", " ");
+            }
+
+            if (strs.Length > 1)
+            {
+                singer = strs[1];
+            }
+
+
             List<clsMusic> lmsc = new List<clsMusic>();
             var list = Parallel(() => GetKWMusicList(SongName), () => GetKGMusicList(SongName), () => GetWYYMusicList(SongName), () => GetQQMusicList(SongName));
             foreach (var value in list)
             {
                 lmsc.AddRange(value);
             }
+
+            var strs_ = songName.Split(' ');
+            var containsSpace = songName.Contains(" ");
+            bool contains(string name)
+            {
+                name = name.ToLower();
+                if (name.Contains(songName)) return true;
+                if(containsSpace && strs_.Length > 1)
+                {
+                    return name.Contains(strs_[0]) && name.Contains(strs_[1]);
+                }
+                return false;
+            }
+
+            //移除歌名不对的歌曲
+            lmsc.RemoveAll(x => (!contains(x.Name)));
+
+
+            lmsc.Sort((a, b) => {
+                var aName = a.Name.ToLower();
+                var bName = b.Name.ToLower();
+                if (aName != songName && bName == songName)
+                {
+                    return 1;
+                }
+                if (aName == songName && bName != songName)
+                {
+                    return -1;
+                }
+
+
+                if (singer != null)
+                {
+                    if (!a.Singer.Contains(singer) && b.Singer.Contains(singer))
+                    {
+                        return 1;
+                    }
+                    if (a.Singer.Contains(singer) && !b.Singer.Contains(singer))
+                    {
+                        return -1;
+                    }
+                }
+                return 0;
+            });
+
+            while(lmsc.Count > 0)
+            {
+                var info = lmsc.First();
+                var DownloadInfo = info.DownloadInfo;
+                var url = GetMusicDownloadURL(DownloadInfo, info.Source);
+                if (string.IsNullOrEmpty(url))
+                {
+                    lmsc.RemoveAt(0);
+                }
+                else break;
+            }
+
             return lmsc;
         }
+
+        
+
         public List<clsMusic> GetKWMusicList(string SongName)
         {
             bool bolCanDownload;
@@ -168,7 +244,7 @@ namespace UnLockMusic
             //------QQ音乐--------
             string url = m_strGetQQMusicList.Replace("<<SongName>>", SongName);
             string strJson = m_htpClient.GetWeb(url);
-
+            if(string.IsNullOrEmpty(strJson))return lmsc;
             try
             {
                 JObject jo = (JObject)JsonConvert.DeserializeObject(strJson);
@@ -221,12 +297,14 @@ namespace UnLockMusic
                 case enmMusicSource.Kg:
                     url = m_strGetKgMusicDownloadURL.Replace("<<FileHash>>", date);//.Replace("<<KgMid>>", "c596eb268a2705383a10d0af021664c0");//.Replace("<<KgDFID>>","07u9ob41Vu350chwOw4ejU7b");
                     ResultURL = m_htpClient.GetWeb(url);
-
+                   
                     if (ResultURL.Substring(1, 10) == "\"status\":1")
                     {
                         jo = (JObject)JsonConvert.DeserializeObject(ResultURL);
-                        ResultURL = jo["data"]["play_url"].ToString();
-
+                        var data = jo["data"];
+                        //var datastr = data.ToString();
+                        ResultURL = data["play_url"].ToString();
+                        if (string.IsNullOrEmpty(ResultURL)) return "";
                         m_strFileFormat = ResultURL.Substring(ResultURL.Length - 4);//可能会出错，如果后缀不是3个字节的话
                     }
                     break;
