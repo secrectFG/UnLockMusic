@@ -47,11 +47,20 @@ namespace UnLockMusic
             InitializeComponent();
             init();
             ReadConfig();
-
+            
 #if DEBUG
-            txbSearch.Text = "crazy_frog";
+            txbSearch.Text = Properties.Settings.Default.lastSearch;
 #endif
+            FormClosed += FrmList_FormClosed;
         }
+
+        private void FrmList_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            Properties.Settings.Default.lastSearch = txbSearch.Text;
+            Properties.Settings.Default.Save();
+        }
+
+
 
         #region 控件事件
         private void dataGVscan_CellContentClick(object sender, DataGridViewCellEventArgs e)
@@ -265,7 +274,8 @@ namespace UnLockMusic
             string strName = txbSearch.Text;
             clsMusicOperation mop = new clsMusicOperation();
             List<clsMusic> lmsc = new List<clsMusic>();
-
+            Properties.Settings.Default.lastSearch = txbSearch.Text;
+            Properties.Settings.Default.Save();
             try
             {
                 dataGVscan.Invoke((MethodInvoker)(() =>  //清空列表
@@ -309,6 +319,21 @@ namespace UnLockMusic
             thd.Start(oRow);
 
         }
+
+        string TrimFileString(string fn)
+        {
+            fn = fn.Replace("?", "_");
+            fn = fn.Replace("\\", "_");
+            fn = fn.Replace("/", "_");
+            fn = fn.Replace("*", "_");
+            fn = fn.Replace(":", "_");
+            fn = fn.Replace(">", "_");
+            fn = fn.Replace("<", "_");
+            fn = fn.Replace("|", "_");
+            fn = fn.Replace("\"", "_");
+            return fn;
+        }
+
         /// <summary>
         /// 下载音乐的线程
         /// </summary>
@@ -366,6 +391,7 @@ namespace UnLockMusic
                 }
 
                 strFileName = strFileName + "\\" + GetFileName(iRow) + strFormat;//设置文件名
+                strFileName = TrimFileString(strFileName);
                 while (File.Exists(strFileName))  //如果存在文件，则添加序号，直到获取到一个可创建的文件名
                 {
                     i++;

@@ -43,6 +43,35 @@ namespace UnLockMusic
             m_strFileFormat = "";
         }
 
+        int compare<T>(string a, string b, T c, Func<string, T, bool> func)
+        {
+            var b1 = func(a, c);
+            var b2 = func(b, c);
+            if (!b1 && b2)
+            {
+                return 1;
+            }
+            if (b1 && !b2)
+            {
+                return -1;
+            }
+            return 0;
+        }
+        int compare(string a, string b, Func<string, bool> func)
+        {
+            var b1 = func(a);
+            var b2 = func(b);
+            if (!b1 && b2)
+            {
+                return 1;
+            }
+            if (b1 && !b2)
+            {
+                return -1;
+            }
+            return 0;
+        }
+
         /// <summary>
         /// 获取音乐列表
         /// </summary>
@@ -62,6 +91,7 @@ namespace UnLockMusic
             if (strs.Length > 1)
             {
                 singer = strs[1];
+                singer = singer.Replace("_", " ");
             }
 
 
@@ -72,48 +102,58 @@ namespace UnLockMusic
                 lmsc.AddRange(value);
             }
 
-            var strs_ = songName.Split(' ');
-            var containsSpace = songName.Contains(" ");
-            bool contains(string name)
-            {
-                name = name.ToLower();
-                if (name.Contains(songName)) return true;
-                if(containsSpace && strs_.Length > 1)
-                {
-                    return name.Contains(strs_[0]) && name.Contains(strs_[1]);
-                }
-                return false;
-            }
+            //var strs_ = songName.Split(' ');
+            //var containsSpace = songName.Contains(" ");
+            //bool contains(string name)
+            //{
+            //    name = name.ToLower();
+            //    if (name.Contains(songName)) return true;
+            //    if(containsSpace && strs_.Length > 1)
+            //    {
+            //        return name.Contains(strs_[0]) && name.Contains(strs_[1]);
+            //    }
+            //    return false;
+            //}
 
             //移除歌名不对的歌曲
-            lmsc.RemoveAll(x => (!contains(x.Name)));
+            //lmsc.RemoveAll(x => (!contains(x.Name)));
+            //var rules = new List<Func<,int>>();
 
 
+            
+            var sn = SongName.ToLower();
+            var parts = sn.Split(' ');
             lmsc.Sort((a, b) => {
                 var aName = a.Name.ToLower();
                 var bName = b.Name.ToLower();
-                if (aName != songName && bName == songName)
+                int r = 0;
+                //r = compare(aName, bName, SongName, (x, y) => x == y);
+                //
+                if (r == 0)
                 {
-                    return 1;
+                    r = compare(aName, bName, sn, (x, y) => x.StartsWith(y));
                 }
-                if (aName == songName && bName != songName)
+                if (r == 0)
                 {
-                    return -1;
+                    r = compare(aName, bName, sn, (x, y) => x.Contains(y));
                 }
-
-
-                if (singer != null)
+                if (r == 0)
                 {
-                    if (!a.Singer.Contains(singer) && b.Singer.Contains(singer))
-                    {
-                        return 1;
-                    }
-                    if (a.Singer.Contains(singer) && !b.Singer.Contains(singer))
-                    {
-                        return -1;
-                    }
+                    if(parts.Length>1)
+                        r = compare(aName, bName, parts, (x, y) => x.Contains(y[0]) && x.Contains(y[1]));
                 }
-                return 0;
+                if (r == 0)
+                {
+                    r = compare(aName, bName, parts, (x, y) => x.Contains(y[0]));
+                }
+                if (r == 0) r = compare(aName, bName, x => x == sn);
+                if (r == 0) r = compare(aName, bName, x => x == SongName);
+                //if (r == 0) 
+                //{
+                //    if (singer != null)
+                //        r = compare(a.Singer, b.Singer, singer, (x, y) => x.Contains(y));
+                //}
+                return r;
             });
 
             while(lmsc.Count > 0)
